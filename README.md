@@ -52,4 +52,4 @@ This project was inspired by and reuses significant amount of code from [this ar
 
 # License
 
-Licensed under [Apache 2.0 license](LICENSE).
+Licensed under [Apache 2.0 license](LICENSE.md).
