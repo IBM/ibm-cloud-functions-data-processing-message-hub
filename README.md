@@ -46,12 +46,10 @@ Now that your Message Hub and OpenWhisk are configured and cloud resources are d
 
 This example is intentially kept simple, but you can extend it with many additional actions, triggers, rules and connect OpenWhisk to other resources. It is very easy to build scalable serverless applications with OpenWhisk.
 
-# Authors
-
-... tbd ...
+# Credits
 
 This project was inspired by and reuses significant amount of code from [this article](https://medium.com/openwhisk/transit-flexible-pipeline-for-iot-data-with-bluemix-and-openwhisk-4824cf20f1e0#.talwj9dno).
 
 # License
 
-This project is licensed under [Apache 2.0 license](LICENSE).
+Licensed under [Apache 2.0 license](LICENSE).
