@@ -1,0 +1,63 @@
+{
+	"events": [{
+		"orgId": "Org1",
+		"deviceType": "taxi",
+		"deviceId": "taxi1",
+		"eventType": "update",
+		"timestamp": "2011-01-01T11:11:11.111+02",
+		"payload": {
+			"velocity": 10,
+			"type": "taxi",
+			"name": "taxi1",
+			"location": {
+				"latitude": 11.11,
+				"longitude": -1.11
+			}
+		}
+	}, {
+		"orgId": "Org2",
+		"deviceType": "taxi",
+		"deviceId": "taxi2",
+		"eventType": "update",
+		"timestamp": "2012-02-02T22:22:22.222+02",
+		"payload": {
+			"velocity": 20,
+			"type": "taxi",
+			"name": "taxi2",
+			"location": {
+				"latitude": 22.02,
+				"longitude": -2.22
+			}
+		}
+	}, {
+		"orgId": "Org3",
+		"deviceType": "taxi",
+		"deviceId": "taxi3",
+		"eventType": "update",
+		"timestamp": "2013-03-03T13:33:33.333+02",
+		"payload": {
+			"velocity": 30,
+			"type": "taxi",
+			"name": "taxi3",
+			"location": {
+				"latitude": 3.33,
+				"longitude": -33.33
+			}
+		}
+	}, {
+		"orgId": "Org4",
+		"deviceType": "taxi",
+		"deviceId": "taxi4",
+		"eventType": "update",
+		"timestamp": "2014-04-04T14:44:44.444+02",
+		"payload": {
+			"velocity": 40,
+			"type": "taxi",
+			"name": "taxi4",
+			"location": {
+				"latitude": 44.44,
+				"longitude": -44.44
+			}
+		}
+	}]
+}
