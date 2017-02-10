@@ -2,5 +2,5 @@ secret.sh
 *.log
 /.c9
 /snippets
-.backup.sh
+backup.sh
 /actions/mhpost/node_modules
