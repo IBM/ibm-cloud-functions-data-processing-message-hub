@@ -3,3 +3,4 @@ secret.sh
 /.c9
 /snippets
 .backup.sh
+/actions/mhpost/node_modules
