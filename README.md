@@ -1,10 +1,10 @@
-# OpenWhisk Getting Started - Data Processing with Message Hub
+# Getting Started with OpenWhisk and Message Hub
 
-This project provides sample code for creating your Message Hub data processing app with Apache OpenWhisk on IBM Bluemix. It should take no more than 10 minutes to get up and running. Once you complete this sample application, you can move on to more complex serverless application use cases.
+This project provides sample code for creating your Message Hub (Kafka) data processing app with Apache OpenWhisk on IBM Bluemix. It should take no more than 10 minutes to get up and running. Once you complete this sample application, you can move on to more complex serverless application use cases.
 
-## Overview diagram
+## Overview of message flow
 
-![Sample Architecture](/images/OpenWhisk-Message Hub-sample-architecture.png)
+![Sample Architecture](/images/OpenWhisk-MessageHub-sample-architecture.png)
 
 Flow of processing goes as follows:
 
