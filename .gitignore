@@ -1,0 +1,6 @@
+secret.sh
+*.log
+/.c9
+/snippets
+.backup.sh
+/actions/mhpost/mhpost.zip

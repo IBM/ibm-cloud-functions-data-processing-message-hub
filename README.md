@@ -1,6 +1,7 @@
 # AQUEDUCT: Using OpenWhisk with IBM Message Hub and Kafka
-
-The AQUEDUCT project demonstrates the use of OpenWhisk for sending and receiving IBM Message Hub messages (can be used for Kafka as well). The architecture of AQUEDUCT is shown on the following diagram: 
+or
+# data-processing-messagehub
+Sample for Data processing App from MessageHub that persists to Cloudant / Real-time data stream processing (WHISK-57). The AQUEDUCT project demonstrates the use of OpenWhisk for sending and receiving IBM Message Hub messages (can be used for Kafka as well). The architecture of AQUEDUCT is shown on the following diagram: 
 
 ![AQUEDUCT Architecture](/images/aqueduct-arch.png)
 
