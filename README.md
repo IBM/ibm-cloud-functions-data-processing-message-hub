@@ -44,13 +44,14 @@ Next step is to configure OpenWhisk to perform the message consumption, transfor
 1. Clone this repository to your machine.
 2. Run [wskinstall.sh](wskinstall.sh) schript - this will download and configure 'wsk' command line tool.
 2. Copy [secret.template.sh](secret.template.sh) into 'secret.sh ' and update it with proper credentials (from VCAP_SERVICES or the “Credentials” tab in Message Hub UI).
+3. Configure `BMX_ORG` and `BMX_SPACE` in [env.sh](env.sh) with the organization and space that you are using from your BlueMix Account.
 3. Run [wskdeploy.sh](wskdeploy.sh) script. This will package and deploy your JavaScript actions into Bluemix OpenWhisk cloud.
 
 ### Test the application
 
 Now that your Message Hub and OpenWhisk are configured and cloud resources are deployed, it is time to test the application.
 
-1. Send or or more test messages by running [kafka_publish.sh](kafka_publish.sh) script. This will kick off the chain of processing.
+1. Send one or more test messages by running [kafka_publish.sh](kafka_publish.sh) script. This will kick off the chain of processing.
 2. Get responses from server by running [kafka_consume.sh](kafka_consume.sh) script. It will display results on your screen. 
 
 This example is intentially kept simple, but you can extend it with many additional actions, triggers, rules and connect OpenWhisk to other resources. It is very easy to build scalable serverless applications with OpenWhisk.
