@@ -44,7 +44,7 @@ post()
 # MAIN
 #############################################################################
 echo_my "Encoding payload from file '$REQUEST_FILE'..."
-PAYLOAD=$( base64 -w0 $REQUEST_FILE )   # Note that it is important to disable line wrapping
+PAYLOAD=$( base64 $REQUEST_FILE | tr -d '\n' | tr -d '\r' )   # Note that it is important to disable line wrapping
 
 NUM_MSGS=2
 for ((i=0; i<$NUM_MSGS; i++)); do
