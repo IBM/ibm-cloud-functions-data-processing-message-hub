@@ -1,7 +1,7 @@
 {
   "name": "mypost",
   "version": "0.1",
-  "description": "action posting messages to a Message Hub topic",
+  "description": "Action posting messages to a Message Hub topic",
   "author": "IBM",
   "license": "Apache-2.0",
   "dependencies": {

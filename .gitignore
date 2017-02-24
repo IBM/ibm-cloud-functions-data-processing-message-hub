@@ -1,4 +1,4 @@
-secret.sh
+local.env
 *.log
 /.c9
 /snippets

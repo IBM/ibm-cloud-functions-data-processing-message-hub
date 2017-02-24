@@ -8,34 +8,31 @@ Serverless platforms like Apache OpenWhisk provide a runtime that scales automat
 
 Flow of processing goes as follows:
 
-1. External process (simulated by the script [`kafka_publish.sh`](kafka_publish.sh)) puts a message into IBM Message Hub (Kafka) into the topic 'in-topic'.
-2. OpenWhisk has a feed from Message Hub that starts a trigger 'kafka-trigger'.
-3. The trigger starts a rule 'kafka-inbound-rule', which is configured to invoke a 'kafka-sequence' sequence.
-4. That sequence invokes two actions one after another. The first action called is 'consume-kafka-action'. It picks up the message from Message Hub and validates that message.
-5. The output of the first action is passed as input into the action 'publish-kafka-action'. This action counts number of "events" in the input message and generates a summary JSON and then publishes it into the Message Hub topic 'out-topic'.
-6. External process (simulated by the [`kafka_consume.sh`](kafka_consume.sh)) retrieves the message from Message Hub and prints it on the screen. Please note that due to latency issues, you may need to run the message consumer again if it did not get the message the first time.
-7. This completes the flow of data.
+1. An external process (simulated by the script [`kafka_publish.sh`](kafka_publish.sh)) puts a message into IBM Message Hub (Kafka) into the topic _in-topic_.
+2. An OpenWhisk feed associated with Message Hub that starts a trigger _kafka-trigger_. The trigger is linked by a rule _kafka-inbound-rule_, which invokes a _kafka-sequence_ sequence.
+3. That sequence invokes two actions one after another. The first action called is _consume-kafka-action_. It picks up the message from Message Hub and validates that message.
+4. The output of the first action is passed as input into the action _publish-kafka-action_. This action counts the number of "events" in the input message, generates a summary JSON, and then publishes it into the Message Hub topic _out-topic_.
+5. An external process (simulated by the [`kafka_consume.sh`](kafka_consume.sh)) then retrieves the message from Message Hub and prints it on the screen. Please note that due to latency issues, you may need to run the message consumer again if it did not get the message the first time.
 
 # Installation
-Setting up this sample involves configuration of OpenWhisk and Cloudant on IBM Bluemix. [If you haven't already signed up for Bluemix and configured OpenWhisk, review those steps first](docs/OPENWHISK.md).
+Setting up this sample involves configuration of OpenWhisk and Message Hub on IBM Bluemix. [If you haven't already signed up for Bluemix and configured OpenWhisk, review those steps first](docs/OPENWHISK.md).
 
 ### Setting up Message Hub
-First, let's set up the IBM Message Hub on Bluemix. We need it to broker messages between our simulated clients and actions on OpenWhisk.
+First, let's set up Message Hub on Bluemix. We need it to broker messages between our simulated clients and actions on OpenWhisk.
 
 1. Go to the Bluemix Catalog page and select [Message Hub service](https://console.ng.bluemix.net/catalog/services/message-hub).
 2. Click "Create" in the right hand bottom corner. Lets assume you called your Message Hub broker "kafka-broker".
-3. On a "Manage" tab of your Message Hub console create two topics: "in-topic" and "out-topic".
+3. On a "Manage" tab of your Message Hub console create two topics: _in-topic_ and _out-topic_.
 
 > If you want to change names of topics or other resources, please update [`env.sh`](env.sh) file to reflect your changes.
 
 ### Setting up OpenWhisk
 The next step is to configure OpenWhisk to perform the message consumption, transformation, and publishing.
 
-1. Clone this repository to your machine.
-2. Run [`wskinstall.sh`](wskinstall.sh) script - this will download and configure `wsk` command line tool.
-2. Copy [`secret.template.sh`](secret.template.sh) into `secret.sh` and update it with proper credentials (from VCAP_SERVICES or the "Credentials" tab in Message Hub UI).
+1. Run the [`wskinstall.sh`](wskinstall.sh) script - this will download and configure the `wsk` command line tool.
+2. Copy [`template.local.env`](template.local.env) into `local.env` and update it with proper credentials (from VCAP_SERVICES or the "Credentials" tab in Message Hub UI).
 3. Configure `BMX_ORG` and `BMX_SPACE` in [`env.sh`](env.sh) with the organization and space that you are using from your Bluemix Account.
-3. Run [`wskdeploy.sh`](wskdeploy.sh) script. This will package and deploy your JavaScript actions into Bluemix OpenWhisk cloud.
+4. Run [`wskdeploy.sh`](wskdeploy.sh) script. This will package and deploy your JavaScript actions into Bluemix OpenWhisk cloud.
 
 ### Test the application
 Now that your Message Hub and OpenWhisk are configured and cloud resources are deployed, it is time to test the application.
