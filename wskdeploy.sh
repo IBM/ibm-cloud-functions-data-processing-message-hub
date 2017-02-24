@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##############################################################################
-# Copyright 2015-2017 IBM Corporation
+# Copyright 2017 IBM Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@
 set -o nounset
 
 source env.sh
-source secret.sh
+source local.env
 
 cleanup() {
-    echo_my "Cleanup...\n"
+  echo_my "Cleanup...\n"
  	wsk rule delete --disable ${RULE}
 	wsk trigger delete ${TRIGGER}
 	wsk action delete ${SEQUENCE}
@@ -30,7 +30,7 @@ cleanup() {
 	wsk action delete ${PKG}/${POST_ACTION}
 	wsk package delete ${PKG_TARGET}
 	wsk package delete ${PKG}
-    echo_my "<--- Cleanup complete\n"
+  echo_my "<--- Cleanup complete\n"
 }
 
 ###################################################
