@@ -15,15 +15,13 @@
 # limitations under the License.
 ##############################################################################
 
-set -o nounset
 source local.env
-source env.sh
 
 #############################################################################
 # Posts a message to a designated topic
 # ARGS:
 #       1 - Topic name
-#       2 - Payload (must be encoded in base64)    
+#       2 - Payload (must be encoded in base64)
 # RETURNS:
 #       Nothing
 #############################################################################
@@ -43,13 +41,13 @@ post()
 #############################################################################
 # MAIN
 #############################################################################
-echo_my "Encoding payload from file '$REQUEST_FILE'..."
-PAYLOAD=$( base64 $REQUEST_FILE | tr -d '\n' | tr -d '\r' )   # Note that it is important to disable line wrapping
+echo "Encoding payload from file 'request.json'..."
+PAYLOAD=$( base64 request.json | tr -d '\n' | tr -d '\r' )   # Note that it is important to disable line wrapping
 
 NUM_MSGS=2
 for ((i=0; i<$NUM_MSGS; i++)); do
-    echo_my "Posting a message # $i into the topic '$SRC_TOPIC'...\n"
+    echo "Posting a message # $i into the topic '$SRC_TOPIC'...\n"
     post $SRC_TOPIC "$PAYLOAD"    # Note that PAYLOAD has spaces in in, so need to pass it in quotes
 done
 
-echo_my "All done!\n"
+echo "All done!\n"

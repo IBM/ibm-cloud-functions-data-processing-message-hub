@@ -15,9 +15,7 @@
 # limitations under the License.
 ##############################################################################
 
-set -o nounset
 source local.env
-source env.sh
 
 #############################################################################
 # Takes input message and decodes the base64 to human readable format
@@ -73,14 +71,14 @@ consume()
 # MAIN
 #############################################################################
 CONSUMER=consumers/my_consumer
-echo_my "Creating Kafka consumer '$CONSUMER'...\n"
+echo "Creating Kafka consumer '$CONSUMER'...\n"
 create_consumer $CONSUMER
 
-echo_my "Consuming a message from the topic '$DEST_TOPIC'...\n"
+echo "Consuming a message from the topic '$DEST_TOPIC'...\n"
 consume $DEST_TOPIC $CONSUMER
 
-echo_my "Message content obtained:"
+echo "Message content obtained:"
 decode_response "$RESULT"
-echo_my "\033[0;31m$DECODED" $ECHO_NO_PREFIX
+echo "\033[0;31m$DECODED" $ECHO_NO_PREFIX
 
-echo_my "All done!\n"
+echo "All done!\n"

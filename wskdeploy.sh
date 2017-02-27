@@ -15,71 +15,85 @@
 # limitations under the License.
 ##############################################################################
 
-# This prevents running the script if any of the variables have not been set
-set -o nounset
-
-source env.sh
+# Load configuration variables
 source local.env
 
-cleanup() {
-  echo_my "Cleanup...\n"
- 	wsk rule delete --disable ${RULE}
-	wsk trigger delete ${TRIGGER}
-	wsk action delete ${SEQUENCE}
-	wsk action delete ${GET_ACTION}
-	wsk action delete ${PKG}/${POST_ACTION}
-	wsk package delete ${PKG_TARGET}
-	wsk package delete ${PKG}
-  echo_my "<--- Cleanup complete\n"
+function install() {
+  echo -e "Installing OpenWhisk actions, triggers, and rules for openwhisk-data-processing-message-hub..."
+
+  echo "Creating kafka package"
+  wsk package create kafka
+
+  # Package the rule for deployment
+  echo "Zipping up actions"
+  DIR=`pwd`
+  cd actions/mhpost
+  npm install
+  zip -r mhpost.zip *
+  cd ${DIR}
+
+  echo "Creating mhget-action action"
+  wsk action create mhget-action actions/mhget/mhget.js
+
+  echo "Creating mhpost-action action"
+  wsk action create kafka/mhpost-action actions/mhpost/mhpost.zip --kind nodejs:6
+
+  echo "Creating package binding"
+  wsk package bind kafka kafka-out-binding --param api_key ${API_KEY} --param kafka_rest_url ${KAFKA_REST_URL} --param topic ${DEST_TOPIC}
+
+  echo "Summary of package binding"
+  wsk package get --summary kafka-out-binding
+
+  echo "Creating kafka-trigger trigger"
+  wsk trigger create kafka-trigger -f /_/Bluemix_${KAFKA_INSTANCE_NAME}_Credentials-1/messageHubFeed -p isJSONData true -p topic ${SRC_TOPIC}
+
+  echo "Creating kafka-sequence sequence"
+  wsk action create kafka-sequence --sequence mhget-action,kafka-out-binding/mhpost-action
+  # wsk action create kafka-sequence --sequence mhget-action,kafka-out-binding/mhpost-action
+
+  echo "Creating kafka-inbound-rule rule"
+  wsk rule create kafka-inbound-rule kafka-trigger kafka-sequence
+
+  echo -e "Install Complete"
 }
 
-###################################################
-# MAIN
-###################################################
-echo_my "Set OpenWhisk authentication property...\n"
-wsk property set --apihost openwhisk.ng.bluemix.net --auth ${OW_AUTH_KEY}
-cleanup
 
-echo_my "Refresing OpenWhisk packages...\n"
-wsk package refresh
+function uninstall() {
+  echo -e "Uninstalling..."
 
-############################# PACKAGES
-echo_my "Creating $PKG package...\n"
-wsk package create ${PKG} || die
+  wsk rule delete --disable kafka-inbound-rule
+	wsk trigger delete kafka-trigger
+	wsk action delete kafka-sequence
+	wsk action delete mhget-action
+	wsk action delete kafka/mhpost-action
+	wsk package delete kafka-out-binding
+	wsk package delete kafka
 
-############################# ACTIONS
-# Package the rule for deployment
-echo_my "Zipping up actions...\n"
-DIR=`pwd`
-ZIP=mhpost.zip
-ZIP_PATH=./actions/mhpost
-cd ${ZIP_PATH}
-zip -r ${ZIP} * || die
-cd ${DIR}
+  echo -e "Uninstall Complete"
+}
 
-echo_my "Creating $GET_ACTION action...\n"
-wsk action create ${GET_ACTION} actions/mhget/mhget.js || die
+function showenv() {
+  echo -e API_KEY="$API_KEY"
+  echo -e USER="$USER"
+  echo -e PASSWORD="$PASSWORD"
+  echo -e KAFKA_REST_URL="$KAFKA_REST_URL"
+  echo -e KAFKA_ADMIN_URL="$KAFKA_ADMIN_URL"
+  echo -e KAFKA_INSTANCE_NAME="$KAFKA_INSTANCE_NAME"
+  echo -e SRC_TOPIC="$SRC_TOPIC"
+  echo -e DEST_TOPIC="$DEST_TOPIC"
+}
 
-echo_my "Creating $POST_ACTION action...\n"
-wsk action create ${PKG}/${POST_ACTION} ${ZIP_PATH}/${ZIP} --kind nodejs:6 || die
-
-echo_my "Creating package binding...\n"
-wsk package bind ${PKG} ${PKG_TARGET} --param api_key ${API_KEY} --param kafka_rest_url ${KAFKA_REST_URL} --param topic ${DEST_TOPIC} || die
-
-echo_my "Summary of package binding...\n"
-wsk package get --summary ${PKG_TARGET}
-
-############################# TRIGGERS
-echo_my "Creating $TRIGGER trigger...\n"
-wsk trigger create ${TRIGGER} -f /${BMX_ORG}_${BMX_SPACE}/${BMX_CREDENTIALS}/messageHubFeed -p isJSONData true -p topic ${SRC_TOPIC} || die
-
-############################# SEQUENCES
-echo_my "Creating ${SEQUENCE} sequence...\n"
-wsk action create ${SEQUENCE} --sequence ${GET_ACTION},${PKG_TARGET}/${POST_ACTION} || die
-# wsk action create ${SEQUENCE} --sequence ${GET_ACTION},${PKG_TARGET}/${POST_ACTION} || die
-
-############################# RULES
-echo_my "Creating $RULE rule...\n"
-wsk rule create ${RULE} ${TRIGGER} ${SEQUENCE} || die
-
-echo_my "All done!\n"
+case "$1" in
+"--install" )
+install
+;;
+"--uninstall" )
+uninstall
+;;
+"--env" )
+showenv
+;;
+* )
+usage
+;;
+esac
