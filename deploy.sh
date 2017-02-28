@@ -22,6 +22,7 @@ function install() {
   echo -e "Installing OpenWhisk actions, triggers, and rules for openwhisk-data-processing-message-hub..."
 
   echo "Creating kafka package"
+  wsk package refresh
   wsk package create kafka
 
   # Package the rule for deployment
@@ -39,17 +40,22 @@ function install() {
   wsk action create kafka/mhpost-action actions/mhpost/mhpost.zip --kind nodejs:6
 
   echo "Creating package binding"
-  wsk package bind kafka kafka-out-binding --param api_key ${API_KEY} --param kafka_rest_url ${KAFKA_REST_URL} --param topic ${DEST_TOPIC}
+  wsk package bind kafka kafka-out-binding \
+    --param api_key ${API_KEY} \
+    --param kafka_rest_url ${KAFKA_REST_URL} \
+    --param topic ${DEST_TOPIC}
 
   echo "Summary of package binding"
   wsk package get --summary kafka-out-binding
 
   echo "Creating kafka-trigger trigger"
-  wsk trigger create kafka-trigger -f /_/Bluemix_${KAFKA_INSTANCE_NAME}_Credentials-1/messageHubFeed -p isJSONData true -p topic ${SRC_TOPIC}
+  wsk trigger create kafka-trigger \
+    --feed /_/Bluemix_${KAFKA_INSTANCE_NAME}_Credentials-1/messageHubFeed \
+    --param isJSONData true \
+    --param topic ${SRC_TOPIC}
 
   echo "Creating kafka-sequence sequence"
   wsk action create kafka-sequence --sequence mhget-action,kafka-out-binding/mhpost-action
-  # wsk action create kafka-sequence --sequence mhget-action,kafka-out-binding/mhpost-action
 
   echo "Creating kafka-inbound-rule rule"
   wsk rule create kafka-inbound-rule kafka-trigger kafka-sequence

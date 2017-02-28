@@ -26,10 +26,10 @@ source local.env
 #############################################################################
 DECODED=""
 decode_response() {
-    local ARG=$1
-    local ENCODED=${1##*,\"value\":\"}
-    local ENCODED=${ENCODED%%\",\"partition\":*}
-    DECODED=`echo $ENCODED | base64 -d`
+  local ARG=$1
+  local ENCODED=${1##*,\"value\":\"}
+  local ENCODED=${ENCODED%%\",\"partition\":*}
+  DECODED=`echo $ENCODED | base64 -D`
 }
 
 #############################################################################
@@ -41,13 +41,13 @@ decode_response() {
 #############################################################################
 create_consumer()
 {
-    local CONSUMER=$1
-    # Create a consumer for binary data, starting at the beginning of the topic's
-    # log. Then consume some data from a topic.
-    curl -X POST -H "Content-Type: application/vnd.kafka.v1+json" \
-        -H "X-Auth-Token: $API_KEY" \
-        --data '{"id": "my_instance", "format": "binary", "auto.offset.reset": "smallest"}' \
-        $KAFKA_REST_URL/$CONSUMER
+  local CONSUMER=$1
+  # Create a consumer for binary data, starting at the beginning of the topic's
+  # log. Then consume some data from a topic.
+  curl -X POST -H "Content-Type: application/vnd.kafka.v1+json" \
+    -H "X-Auth-Token: $API_KEY" \
+    --data '{"id": "my_instance", "format": "binary", "auto.offset.reset": "smallest"}' \
+    $KAFKA_REST_URL/$CONSUMER
 }
 
 #############################################################################
@@ -60,25 +60,25 @@ create_consumer()
 #############################################################################
 consume()
 {
-    local TOPIC=$1
-    local CONSUMER=$2
-    RESULT=`curl -X GET -H "Accept: application/vnd.kafka.binary.v1+json" \
-       -H "X-Auth-Token: $API_KEY" \
-       $KAFKA_REST_URL/$CONSUMER/instances/my_instance/topics/$TOPIC`
+  local TOPIC=$1
+  local CONSUMER=$2
+  RESULT=`curl -X GET -H "Accept: application/vnd.kafka.binary.v1+json" \
+    -H "X-Auth-Token: $API_KEY" \
+    $KAFKA_REST_URL/$CONSUMER/instances/my_instance/topics/$TOPIC`
 }
 
 #############################################################################
 # MAIN
 #############################################################################
 CONSUMER=consumers/my_consumer
-echo "Creating Kafka consumer '$CONSUMER'...\n"
+echo "Creating Kafka consumer '$CONSUMER'"
 create_consumer $CONSUMER
 
-echo "Consuming a message from the topic '$DEST_TOPIC'...\n"
+echo "Consuming a message from the topic '$DEST_TOPIC'"
 consume $DEST_TOPIC $CONSUMER
 
 echo "Message content obtained:"
 decode_response "$RESULT"
 echo "\033[0;31m$DECODED" $ECHO_NO_PREFIX
 
-echo "All done!\n"
+echo "All done!"

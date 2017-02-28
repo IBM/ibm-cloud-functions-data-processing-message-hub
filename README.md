@@ -30,7 +30,7 @@ First, let's set up Message Hub on Bluemix. We need it to broker messages betwee
 The next step is to configure OpenWhisk to perform the message consumption, transformation, and publishing.
 
 1. Copy [`template.local.env`](template.local.env) into `local.env` and update it with proper credentials (from VCAP_SERVICES or the "Credentials" tab in the Message Hub UI).
-3. Run the [`wskdeploy.sh`](wskdeploy.sh) script. This will package and deploy your JavaScript actions to OpenWhisk on Bluemix.
+3. Run the [`deploy.sh`](deploy.sh) script. This will package and deploy your JavaScript actions to OpenWhisk on Bluemix.
 
 ### Test the application
 Now that your Message Hub and OpenWhisk are configured and cloud resources are deployed, it is time to test the application.
