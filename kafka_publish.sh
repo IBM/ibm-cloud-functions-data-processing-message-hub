@@ -43,12 +43,11 @@ post()
 #############################################################################
 echo "Encoding payload from file 'request.json'..."
 PAYLOAD=$( base64 request.json | tr -d '\n' | tr -d '\r' )   # Note that it is important to disable line wrapping
-echo $PAYLOAD
 
 NUM_MSGS=2
 for ((i=0; i<$NUM_MSGS; i++)); do
-  echo "Posting a message #$i into the topic '$SRC_TOPIC'"
+  echo -e "\nPosting a message #$i into the topic '$SRC_TOPIC'"
   post $SRC_TOPIC "$PAYLOAD"    # Note that PAYLOAD has spaces in in, so need to pass it in quotes
 done
 
-echo "All done!"
+echo -e "\nAll done!"
