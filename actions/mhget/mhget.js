@@ -15,7 +15,7 @@
  */
 
 /*
- This function is bound to a trigger and is initiated when the message arrives 
+ This function is bound to a trigger and is initiated when the message arrives
  via OpenWhisk feed connected to Message Hub. Note that many messages can come in
  as a large batch. Example input:
 {
@@ -40,11 +40,11 @@
 				"deviceType": "taxi",
 				"orgId": "Org1",
 				"deviceId": "taxi1"
-			}, 
+			},
 			{ ... }
 			]
 		}
-	}, 
+	},
 	{ ... }
 	]
 }
@@ -66,7 +66,7 @@ Expected output (merge all events from multiple 'messages' into one big 'events'
 		"deviceType": "taxi",
 		"orgId": "Org1",
 		"deviceId": "taxi1"
-	}, 
+	},
 	{ ... }
 	]
 
@@ -74,23 +74,23 @@ Expected output (merge all events from multiple 'messages' into one big 'events'
 **/
 
 function main(params) {
-	console.log("DEBUG: received the following message as input: " + JSON.stringify(params));
+  console.log("DEBUG: Received the following message as input: " + JSON.stringify(params));
 
-	return new Promise(function(resolve, reject) {
-		if (!params.messages || !params.messages[0] || 
-			!params.messages[0].value || !params.messages[0].value.events) {
-			reject("Invalid arguments. Must include 'messages' JSON array with 'value' field");
-		}
-		var msgs = params.messages;
-		var out = [];
-		for (var i = 0; i < msgs.length; i++) {
-			var msg = msgs[i];
-			for (var j = 0; j < msg.value.events.length; j++) {
-				out.push(msg.value.events[j]);
-			}
-		}
-		resolve({
-			"events": out
-		});
-	});
+  return new Promise(function(resolve, reject) {
+    if (!params.messages || !params.messages[0] ||
+      !params.messages[0].value || !params.messages[0].value.events) {
+      reject("Invalid arguments. Must include 'messages' JSON array with 'value' field");
+    }
+    var msgs = params.messages;
+    var out = [];
+    for (var i = 0; i < msgs.length; i++) {
+      var msg = msgs[i];
+      for (var j = 0; j < msg.value.events.length; j++) {
+        out.push(msg.value.events[j]);
+      }
+    }
+    resolve({
+      "events": out
+    });
+  });
 }

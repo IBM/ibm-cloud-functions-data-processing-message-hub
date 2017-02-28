@@ -3,4 +3,5 @@ local.env
 /.c9
 /snippets
 backup.sh
-/actions/mhpost/node_modules
+actions/mhpost/node_modules
+actions/mhpost/mhpost.zip
