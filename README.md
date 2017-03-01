@@ -1,7 +1,14 @@
 # Getting Started with OpenWhisk and Message Hub
-This project provides sample code for creating a Message Hub (Kafka) data processing app with Apache OpenWhisk on IBM Bluemix. It should take no more than 10 minutes to get up and running. Once you complete this sample application, you can move on to more complex serverless application use cases.
+This project provides sample code for creating your Message Hub (Kafka) data processing app with Apache OpenWhisk on IBM Bluemix. It should take no more than 10 minutes to get up and running.
 
-Serverless platforms like Apache OpenWhisk provide a runtime that scales automatically in response to demand, resulting in a better match between the cost of cloud resources consumed and business value gained. One of the key use cases for OpenWhisk is to execute logic in response to events, such as messages or new streams of data.
+This sample assumes you have a basic understanding of the OpenWhisk programming model, which is based on Triggers, Actions, and Rules. If not, you may want to [explore this demo first](https://github.com/IBM/openwhisk-action-trigger-rule).
+
+Serverless platforms like Apache OpenWhisk provide a runtime that scales automatically in response to demand, resulting in a better match between the cost of cloud resources consumed and business value gained.
+
+One of the key use cases for OpenWhisk is to execute logic in response to events, such as messages or new streams of data. Instead of pre-provisioning resources in anticipation of demand, these actions are started and destroyed only as needed in response to demand.
+
+Once you complete this sample application, you can move on to more complex serverless application use cases, such as those named _OpenWhisk 201_ or tagged as [_openwhisk-use-cases_](https://github.com/search?q=topic%3Aopenwhisk-use-cases+org%3AIBM&type=Repositories).
+
 
 ## Overview of message flow
 ![Sample Architecture](/images/OpenWhisk-MessageHub-sample-architecture.png)
