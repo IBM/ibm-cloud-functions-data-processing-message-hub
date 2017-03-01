@@ -11,7 +11,7 @@ Once you complete this sample application, you can move on to more complex serve
 
 
 ## Overview of message flow
-![Sample Architecture](/images/OpenWhisk-MessageHub-sample-architecture.png)
+![Sample Architecture](docs/OpenWhisk-MessageHub-sample-architecture.png)
 
 Flow of processing goes as follows:
 
