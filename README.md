@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub.svg?branch=master)](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub)
+
 # Getting Started with OpenWhisk and Message Hub
 This project provides sample code for creating your Message Hub (Kafka) data processing app with Apache OpenWhisk on IBM Bluemix. It should take no more than 10 minutes to get up and running.
 
