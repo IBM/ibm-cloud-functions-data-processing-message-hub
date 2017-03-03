@@ -18,6 +18,10 @@
 # Load configuration variables
 source local.env
 
+function usage() {
+  echo -e "Usage: $0 [--install,--uninstall,--env]"
+}
+
 function install() {
   echo -e "Installing OpenWhisk actions, triggers, and rules for openwhisk-data-processing-message-hub..."
 

@@ -31,7 +31,7 @@ decode_response() {
     local ARG=$1
     local ENCODED=${1##*,\"value\":\"}
     local ENCODED=${ENCODED%%\",\"partition\":*}
-    DECODED=`echo $ENCODED | base64 -D`
+    DECODED=`echo $ENCODED | base64 --decode`
   fi
 }
 
