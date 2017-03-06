@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub.svg?branch=master)](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub)
 
-# Getting Started with OpenWhisk and Message Hub
+# OpenWhisk 101 - OpenWhisk and Message Hub
 This project provides sample code for creating your Message Hub (Kafka) data processing app with Apache OpenWhisk on IBM Bluemix. It should take no more than 10 minutes to get up and running.
 
 This sample assumes you have a basic understanding of the OpenWhisk programming model, which is based on Triggers, Actions, and Rules. If not, you may want to [explore this demo first](https://github.com/IBM/openwhisk-action-trigger-rule).
@@ -33,13 +33,18 @@ First, let's set up Message Hub on Bluemix. We need it to broker messages betwee
 2. Click "Create" in the right hand bottom corner. Lets assume you called your Message Hub broker "kafka-broker".
 3. On a "Manage" tab of your Message Hub console create two topics: _in-topic_ and _out-topic_.
 
-> If you want to change names of topics or other resources, please update [`env.sh`](env.sh) file to reflect your changes.
+> If you want to change names of topics or other resources, please update `local.env` file to reflect your changes.
 
 ### Setting up OpenWhisk
 The next step is to configure OpenWhisk to perform the message consumption, transformation, and publishing.
 
 1. Copy [`template.local.env`](template.local.env) into `local.env` and update it with proper credentials (from the "Credentials" tab in the Message Hub UI).
-3. Run the [`deploy.sh`](deploy.sh) script. This will package and deploy your JavaScript actions to OpenWhisk on Bluemix.
+2. Also update `local.env` with the names of your topics and name of your Message Hub broker.
+3. Run the [`deploy.sh `](deploy.sh) script. This will package and deploy your JavaScript actions to OpenWhisk on Bluemix.
+
+```sh
+./deploy.sh --install
+```
 
 ### Test the application
 Now that your Message Hub and OpenWhisk are configured and cloud resources are deployed, it is time to test the application.
