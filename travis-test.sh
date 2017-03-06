@@ -46,7 +46,9 @@ echo "Waiting for triggers/actions to finish executing(sleep 5)"
 sleep 5
 
 echo "Consuming kafka out-topic queue"
-KAFKA_MESSAGE=`./kafka_consume.sh | tail -3 | head -1`
+CONSUME_OUTPUT=`./kafka_consume.sh`
+echo "kafka_consume.sh output: \n $CONSUME_OUTPUT"
+KAFKA_MESSAGE=`cat $CONSUME_OUTPUT | tail -3 | head -1`
 echo "consumed message: $KAFKA_MESSAGE"
 
 MSG_AGENT=`echo $KAFKA_MESSAGE | jq -r '.agent'`
