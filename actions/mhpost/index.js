@@ -27,7 +27,7 @@ function transform(events) {
     "agent": "OpenWhisk action",
     "events_count": events.length,
     "avg_velocity": average
-  }
+  };
   return result;
 }
 
@@ -54,7 +54,7 @@ function mhpost(args) {
 
     var MessageHub = require('message-hub-rest');
     var kafka = new MessageHub(vcap_services);
-    var transformedMessage = transform(args.events)
+    var transformedMessage = transform(args.events);
     console.log("DEBUG: Message to be published: " + JSON.stringify(transformedMessage));
 
     kafka.produce(args.topic, transformedMessage)

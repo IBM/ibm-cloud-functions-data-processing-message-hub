@@ -25,30 +25,13 @@ function usage() {
 function install() {
   echo -e "Installing OpenWhisk actions, triggers, and rules for openwhisk-data-processing-message-hub..."
 
-  echo "Creating kafka package"
+  echo "Creating package binding for the Bluemix Kafka service"
   wsk package refresh
   wsk package create kafka
-
-  echo "Zipping up actions"
-  DIR=`pwd`
-  cd actions/mhpost
-  npm install --loglevel=error
-  zip -r mhpost.zip *
-  cd ${DIR}
-
-  echo "Creating mhget-action action as a regular Node.js action"
-  wsk action create mhget-action actions/mhget/mhget.js
-
-  echo "Creating mhpost-action action as a zipped Node.js action, as it contains dependencies"
-  wsk action create kafka/mhpost-action actions/mhpost/mhpost.zip --kind nodejs:6
-
-  echo "Creating package binding for the Bluemix Kafka service"
   wsk package bind kafka kafka-out-binding \
     --param api_key ${API_KEY} \
     --param kafka_rest_url ${KAFKA_REST_URL} \
     --param topic ${DEST_TOPIC}
-
-  echo "Show a summary of the package binding"
   wsk package get --summary kafka-out-binding
 
   echo "Creating the kafka-trigger trigger"
@@ -56,6 +39,17 @@ function install() {
     --feed /_/Bluemix_${KAFKA_INSTANCE_NAME}_Credentials-1/messageHubFeed \
     --param isJSONData true \
     --param topic ${SRC_TOPIC}
+
+  echo "Creating mhget-action action as a regular Node.js action"
+  wsk action create mhget-action actions/mhget/mhget.js
+
+  echo "Creating mhpost-action action as a zipped Node.js action, as it contains dependencies"
+  DIR=`pwd`
+  cd actions/mhpost
+  npm install --loglevel=error
+  zip -r mhpost.zip *
+  cd ${DIR}
+  wsk action create kafka/mhpost-action actions/mhpost/mhpost.zip --kind nodejs:6
 
   echo "Creating the kafka-sequence sequence that links the get and post actions"
   wsk action create kafka-sequence --sequence mhget-action,kafka-out-binding/mhpost-action
