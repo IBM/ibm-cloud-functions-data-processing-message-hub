@@ -3,7 +3,7 @@
 # OpenWhisk 101 - OpenWhisk and Message Hub
 Learn how to [create Message Hub data processing apps](https://github.com/IBM/openwhisk-data-processing-message-hub/wiki) with Apache OpenWhisk on IBM Bluemix. This tutorial will take less than 10 minutes to complete.
 
-You should have a basic understanding of the OpenWhisk programming model. If not, [try the action, trigger, and rule demo first](https://github.com/IBM/openwhisk-action-trigger-rule). [You'll also need a Bluemix account and the latest OpenWhisk command line tool](docs/OPENWHISK.md).
+You should have a basic understanding of the OpenWhisk programming model. If not, [try the action, trigger, and rule demo first](https://github.com/IBM/openwhisk-action-trigger-rule). Also, [you'll need a Bluemix account and the latest OpenWhisk command line tool](docs/OPENWHISK.md).
 
 When complete, move on to more complex serverless applications, such as those named _OpenWhisk 201_ or tagged as [_openwhisk-use-cases_](https://github.com/search?q=topic%3Aopenwhisk-use-cases+org%3AIBM&type=Repositories).
 
@@ -37,19 +37,12 @@ Copy `template.local.env` to a new file named `local.env` and update the `KAFKA_
 > **Note**: `deploy.sh` will be replaced with [`wskdeploy`](https://github.com/openwhisk/openwhisk-wskdeploy) in the future. `wskdeploy` uses a manifest to deploy declared triggers, actions, and rules to OpenWhisk.
 
 # 3. Test new message events
-To test, invoke the first action manually. Open one terminal window to poll the logs:
+Open one terminal window to poll the logs:
 ```bash
 wsk activation poll
 ```
 
-And in a second terminal, invoke the action:
-```bash
-wsk action invoke --blocking --result write-to-cloudant
-```
-
-# 3. Test new message events
 There are two helper scripts that simulate a message producer and a message consumer.
-
 ```bash
 # Produce a message, will trigger the sequence
 ./kafka_publish.sh
@@ -124,6 +117,14 @@ Declare a rule named `kafka-inbound-rule` that links the trigger `kafka-trigger`
 wsk rule create kafka-inbound-rule kafka-trigger kafka-sequence
 ```
 
+## 5.6 Test new message events
+```bash
+# Produce a message, will trigger the sequence
+./kafka_publish.sh
+
+# Consume a message after processing is complete
+./kafka_consume.sh
+```
 # Troubleshooting
 Check for errors first in the OpenWhisk activation log. Tail the log on the command line with `wsk activation poll` or drill into details visually with the [monitoring console on Bluemix](https://console.ng.bluemix.net/openwhisk/dashboard).
 
