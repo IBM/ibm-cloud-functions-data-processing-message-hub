@@ -18,58 +18,57 @@
  This function is bound to a trigger and is initiated when the message arrives
  via OpenWhisk feed connected to Message Hub. Note that many messages can come in
  as a large batch. Example input:
-{
-	"messages": [{
-		"partition": 0,
-		"key": null,
-		"offset": 252,
-		"topic": "in-topic",
-		"value": {
-			"events": [{
-				"eventType": "update",
-				"timestamp": "2011-01-01T11:11:11.111+02",
-				"payload": {
-					"velocity": 11,
-					"type": "taxi",
-					"name": "taxi1",
-					"location": {
-						"latitude": 11.11,
-						"longitude": -1.11
-					}
-				},
-				"deviceType": "taxi",
-				"orgId": "Org1",
-				"deviceId": "taxi1"
-			},
-			{ ... }
-			]
-		}
-	},
-	{ ... }
-	]
-}
+ {
+   "messages": [{
+     "partition": 0,
+     "key": null,
+     "offset": 252,
+     "topic": "in-topic",
+     "value": {
+       "events": [{
+         "eventType": "update",
+         "timestamp": "2011-01-01T11:11:11.111+02",
+         "payload": {
+           "velocity": 11,
+           "type": "taxi",
+           "name": "taxi1",
+           "location": {
+             "latitude": 11.11,
+             "longitude": -1.11
+           }
+         },
+         "deviceType": "taxi",
+         "orgId": "Org1",
+         "deviceId": "taxi1"
+       }, {
+         ...
+       }]
+     }
+   }, {
+     ...
+   }]
+ }
 
 Expected output (merge all events from multiple 'messages' into one big 'events'):
 {
-	"events": [{
-		"eventType": "update",
-		"timestamp": "2011-01-01T11:11:11.111+02",
-		"payload": {
-			"velocity": 11,
-			"type": "taxi",
-			"name": "taxi1",
-			"location": {
-				"latitude": 11.11,
-				"longitude": -1.11
-			}
-		},
-		"deviceType": "taxi",
-		"orgId": "Org1",
-		"deviceId": "taxi1"
-	},
-	{ ... }
-	]
-
+  "events": [{
+    "eventType": "update",
+    "timestamp": "2011-01-01T11:11:11.111+02",
+    "payload": {
+      "velocity": 11,
+      "type": "taxi",
+      "name": "taxi1",
+      "location": {
+        "latitude": 11.11,
+        "longitude": -1.11
+      }
+    },
+    "deviceType": "taxi",
+    "orgId": "Org1",
+    "deviceId": "taxi1"
+  }, {
+    ...
+  }]
 }
 **/
 
