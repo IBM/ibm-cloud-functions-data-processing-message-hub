@@ -25,7 +25,7 @@ chmod u+x wsk
 export PATH=$PATH:`pwd`
 
 echo "Configuring CLI from apihost and API key\n"
-wsk property set --apihost openwhisk.ng.bluemix.net --auth $OPEN_WHISK_KEY #OPEN_WHISK_KEY defined in travis-ci console
+wsk property set --apihost openwhisk.ng.bluemix.net --auth $OPENWHISK_KEY > /dev/null 2>&1
 
 echo "Configure local.env"
 touch local.env #Configurations defined in travis-ci console
@@ -36,7 +36,7 @@ sudo apt-get install jq
 echo "Deploying wsk actions, etc."
 ./deploy.sh --install
 
-echo "Waiting for triggers/actions to finish installing (sleep 5)" 
+echo "Waiting for triggers/actions to finish installing (sleep 5)"
 sleep 5
 
 echo "Publishing a kafka message"
@@ -53,7 +53,7 @@ KAFKA_MESSAGE=`echo "$CONSUME_OUTPUT" | tail -3 | head -1`
 echo "consumed message: $KAFKA_MESSAGE"
 
 MSG_AGENT=`echo $KAFKA_MESSAGE | jq -r '.agent'`
-if [[ $MSG_AGENT == "OpenWhisk action" ]] 
+if [[ $MSG_AGENT == "OpenWhisk action" ]]
 then
 	echo "Found the message we were expecting"
 else
