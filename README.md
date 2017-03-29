@@ -1,18 +1,24 @@
 [![Build Status](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub.svg?branch=master)](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub)
 
-# OpenWhisk Hands On - OpenWhisk and Message Hub
-Learn how to [create Message Hub data processing apps](https://github.com/IBM/openwhisk-data-processing-message-hub/wiki) with Apache OpenWhisk on IBM Bluemix. This tutorial will take about 10 minutes to complete. For more background on the use case, check out [the developer story](https://developer.ibm.com/accelerate/journey/respond-messages-handle-streams/).
+# Message Hub data processing with OpenWhis
+This project shows the power of serverless, event-driven architectures to execute code in response to messages or to handle streams of data records.
 
-You should have a basic understanding of the OpenWhisk programming model. If not, [try the action, trigger, and rule demo first](https://github.com/IBM/openwhisk-action-trigger-rule). Also, you'll need a Bluemix account and the latest [OpenWhisk command line tool (`wsk`) installed and on your PATH](https://github.com/IBM/openwhisk-action-trigger-rule/blob/master/docs/OPENWHISK.md).
+It demonstrates two OpenWhisk actions (written in JavaScript) that read and write messages with Message Hub (based on Apache Kafka). The use case demonstrates how actions can work with data services and execute logic in response to message events.
 
-When complete, move on to more complex serverless applications, such as those named _OpenWhisk 201_ or tagged as [_openwhisk-use-cases_](https://github.com/search?q=topic%3Aopenwhisk-use-cases+org%3AIBM&type=Repositories).
-
-# Message Hub data processing with OpenWhisk
-The example shows how to write actions receive data from Message Hub, aggregate those messages, and send data back to Message Hub. It also shows how to sequences with triggers and rules to link units of logic in a series.
+One action receives message streams of one or more data records, and these are in turn piped to another action in an OpenWhisk sequence (a way to link actions declaratively in a chain). The second action aggregates the message and posts a transformed message to another topic.
 
 ![Sample Architecture](docs/OpenWhisk-MessageHub-sample-architecture.png)
 
-Steps
+## Included components
+
+OpenWhisk
+Message Hub
+
+## Prerequisite
+
+You should have a basic understanding of the OpenWhisk programming model. If not, [try the action, trigger, and rule demo first](https://github.com/IBM/openwhisk-action-trigger-rule). Also, you'll need a Bluemix account and the latest [OpenWhisk command line tool (`wsk`) installed and on your PATH](https://github.com/IBM/openwhisk-action-trigger-rule/blob/master/docs/OPENWHISK.md).
+
+## Steps
 
 1. [Provision Message Hub](#1-provision-mysql)
 2. [Create OpenWhisk actions, triggers, and rules](#2-create-openwhisk-actions-triggers-and-rules)
