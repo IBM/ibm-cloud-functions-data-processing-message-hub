@@ -71,20 +71,7 @@ Use `deploy.sh` again to tear down the OpenWhisk actions, triggers, and rules. Y
 # 5. Recreate deployment manually
 This section provides a deeper look into what the `deploy.sh` script executes so that you understand how to work with OpenWhisk triggers, actions, rules, and packages in more detail.
 
-## 5.1 Bind Kafka package with credential parameters
-Make the Kafka instance in Bluemix available as an event source.
-
-```bash
-wsk package refresh
-wsk package create kafka
-wsk package bind kafka kafka-out-binding \
-  --param api_key ${API_KEY} \
-  --param kafka_rest_url ${KAFKA_REST_URL} \
-  --param topic ${DEST_TOPIC}
-wsk package get --summary kafka-out-binding
-```
-
-## 5.2 Create Kafka message trigger
+## 5.1 Create Kafka message trigger
 Create the `kafka-trigger` trigger that listens for new messages.
 
 ```bash
@@ -94,14 +81,14 @@ wsk trigger create kafka-trigger \
   --param topic ${SRC_TOPIC}
 ```
 
-## 5.3 Create action to consume message
+## 5.2 Create action to consume message
 Upload the `mhget-action` action as a single file Node.js action. This downloads messages when they arrive via the trigger.
 
 ```bash
 wsk action create mhget-action actions/mhget/mhget.js
 ```
 
-## 5.4 Create action to aggregate and send back message
+## 5.3 Create action to aggregate and send back message
 Upload the `mhpost-action` action as a zipped action, in order to include dependencies that are not in the default Node.js environment on OpenWhisk. This aggregates information from the action above, and sends the summary JSON back to Kafka.
 
 ```bash
@@ -110,17 +97,20 @@ cd actions/mhpost
 npm install --loglevel=error
 zip -r mhpost.zip *
 cd ${DIR}
-wsk action create kafka/mhpost-action actions/mhpost/mhpost.zip --kind nodejs:6
+wsk action create mhpost-action actions/mhpost/mhpost.zip --kind nodejs:6 \
+  --param api_key ${API_KEY} \
+  --param kafka_rest_url ${KAFKA_REST_URL} \
+  --param topic ${DEST_TOPIC}
 ```
 
-## 5.5 Create sequence that links get and post actions
+## 5.4 Create sequence that links get and post actions
 Declare a linkage between the `mhget-action` and `mhpost-action` in a sequence named `kafka-sequence`.
 
 ```bash
-wsk action create kafka-sequence --sequence mhget-action,kafka-out-binding/mhpost-action
+wsk action create kafka-sequence --sequence mhget-action,mhpost-action
 ```
 
-## 5.6 Create rule that links trigger to sequence
+## 5.5 Create rule that links trigger to sequence
 Declare a rule named `kafka-inbound-rule` that links the trigger `kafka-trigger` to the sequence named `kafka-sequence`.
 
 ```bash
