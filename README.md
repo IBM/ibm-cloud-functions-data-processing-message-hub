@@ -42,8 +42,6 @@ Copy `template.local.env` to a new file named `local.env` and update the `KAFKA_
 ```bash
 ./deploy.sh --install
 ```
-> **Note**: If you see any error messages, refer to the [Troubleshooting](#troubleshooting) section below.
-
 > **Note**: If you see any error messages, refer to the [Troubleshooting](#troubleshooting) section below. You can also explore [Alternative deployment methods](#alternative-deployment-methods).
 
 # 3. Test new message events
