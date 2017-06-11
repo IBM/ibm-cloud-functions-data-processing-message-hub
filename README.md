@@ -34,7 +34,7 @@ As an alternative to this end-to-end example, you might also consider the more [
 # 1. Provision Message Hub
 Log into Bluemix, provision a [Message Hub](https://console.ng.bluemix.net/catalog/services/message-hub) instance, and name it `kafka-broker`. On the "Manage" tab of your Message Hub console create two topics: _in-topic_ and _out-topic_.
 
-Copy `template.local.env` to a new file named `local.env` and update the `KAFKA_INSTANCE_NAME`, `SRC_TOPIC`, and `DEST_TOPIC` values for your instance if they differ. Update the `API_KEY`, `USER`, and `PASSWORD` values from the "Credentials" tab.
+Copy `template.local.env` to a new file named `local.env` and update the `KAFKA_INSTANCE_NAME`, `SRC_TOPIC`, and `DEST_TOPIC` values for your instance if they differ. Update the `API_KEY`, `USER`, and `PASSWORD` values from the "Service credentials" tab.
 
 # 2. Create OpenWhisk actions, triggers, and rules
 `deploy.sh` is a convenience script reads the environment variables from `local.env` and creates the OpenWhisk actions, triggers, and rules on your behalf. Later you will run these commands yourself.
