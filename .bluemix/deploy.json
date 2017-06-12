@@ -26,19 +26,19 @@
             "type": "password"
         },
         "message-hub-api-key": {
-            "description": "Cloudant name, copy from Bluemix console Message Hub instance credentials",
+            "description": "Message Hub name, copy from Bluemix console Message Hub instance credentials",
             "type": "string"
         },
         "message-hub-user": {
-            "description": "Cloudant name, copy from Bluemix console Message Hub instance credentials",
+            "description": "Message Hub name, copy from Bluemix console Message Hub instance credentials",
             "type": "string"
         },
         "message-hub-rest-url": {
-            "description": "Cloudant REST URL, copy from Message Hub console",
+            "description": "Message Hub REST URL, copy from Message Hub console",
             "type": "password"
         },
         "message-hub-admin-url": {
-            "description": "Cloudant Admin URL, copy from Message Hub console",
+            "description": "Message Hub Admin URL, copy from Message Hub console",
             "type": "string"
         },
         "message-hub-instance-name": {
