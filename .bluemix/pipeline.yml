@@ -17,13 +17,13 @@ stages:
     type: secure
   - name: MESSAGE_HUB_API_KEY
     value: ${MESSAGE_HUB_API_KEY}
-    type: text
+    type: secure
   - name: MESSAGE_HUB_USER
     value: ${MESSAGE_HUB_USER}
-    type: text
+    type: secure
   - name: MESSAGE_HUB_PASSWORD
     value: ${MESSAGE_HUB_PASSWORD}
-    type: text
+    type: secure
   - name: MESSAGE_HUB_KAFKA_REST_URL
     value: ${MESSAGE_HUB_KAFKA_REST_URL}
     type: secure
