@@ -51,6 +51,8 @@ stages:
       #!/bin/bash
 
       set -x
+      set +e
+
       # download openwhisk cli
       if [ ! -f ./wsk ]; then
           wget https://openwhisk.ng.bluemix.net/cli/go/download/linux/amd64/wsk
@@ -63,8 +65,6 @@ stages:
       # create openwhisk package
       ./wsk package refresh
 
-      set +e
-
       echo "Creating a clean deployment"
       ./wsk rule delete --disable kafka-inbound-rule
       ./wsk trigger delete kafka-trigger
@@ -73,11 +73,13 @@ stages:
       ./wsk action delete mhpost-action
       sleep 1
 
+      set -e
+
       echo "Creating the kafka-trigger trigger"
       ./wsk trigger create kafka-trigger \
-        --feed /_/Bluemix_${KAFKA_INSTANCE_NAME}_Credentials-1/messageHubFeed \
+        --feed /_/Bluemix_${MESSAGE_HUB_KAFKA_INSTANCE_NAME}_Credentials-1/messageHubFeed \
         --param isJSONData true \
-        --param topic ${SRC_TOPIC}
+        --param topic ${MESSAGE_HUB_SRC_TOPIC}
 
       echo "Creating mhget-action action as a regular Node.js action"
       ./wsk action create mhget-action actions/mhget/mhget.js
@@ -89,9 +91,9 @@ stages:
       zip -r mhpost.zip *
       cd ${DIR}
       ./wsk action create mhpost-action actions/mhpost/mhpost.zip --kind nodejs:6 \
-        --param api_key ${API_KEY} \
-        --param kafka_rest_url ${KAFKA_REST_URL} \
-        --param topic ${DEST_TOPIC}
+        --param api_key ${MESSAGE_HUB_API_KEY} \
+        --param kafka_rest_url ${MESSAGE_HUB_KAFKA_REST_URL} \
+        --param topic ${MESSAGE_HUB_DEST_TOPIC}
 
       echo "Creating the kafka-sequence sequence that links the get and post actions"
       ./wsk action create kafka-sequence --sequence mhget-action,mhpost-action
