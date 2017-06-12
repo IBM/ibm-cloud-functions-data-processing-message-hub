@@ -1,0 +1,59 @@
+---
+name: "Message Hub Data Processing with OpenWhisk Toolchain"
+description: "Message Hub Data Processing with OpenWhisk application"
+version: 0.1
+required:
+ - deploy
+
+git-message-hub-data-processing:
+  service_id: githubpublic
+  parameters:
+    repo_name: "openwhisk-data-processing-message-hub-{{name}}"
+    repo_url: "https://github.com/IBM/openwhisk-data-processing-message-hub"
+    type: clone
+    has_issues: true
+
+pipeline-message-hub-data-processing:
+  service_id: pipeline
+  hidden: [form, description]
+  parameters:
+    name: "message-hub-data-processing"
+    ui-pipeline: true
+    services: ["git-message-hub-data-processing"]
+    configuration:
+      content: $file(pipeline.yml)
+      env:
+       REPO: "git-message-hub-data-processing"
+       REGION: "{{deploy.parameters.deploy-region}}"
+       ORG: "{{deploy.parameters.deploy-org}}"
+       SPACE: "{{deploy.parameters.deploy-space}}"
+       NAME: "{{pipeline-message-hub-data-processing.parameters.name}}-{{deploy.parameters.deploy-space}}"
+       OPENWHISK_API_ENDPOINT: "{{deploy.parameters.openwhisk-api-endpoint}}"
+       OPENWHISK_AUTH_KEY: "{{deploy.parameters.openwhisk-auth-key}}"
+       MESSAGE_HUB_API_KEY: "{{deploy.parameters.message-hub-api-key}}"
+       MESSAGE_HUB_USER: "{{deploy.parameters.message-hub-user}}"
+       MESSAGE_HUB_PASSWORD: "{{deploy.parameters.message-hub-password}}"
+       MESSAGE_HUB_KAFKA_REST_URL: "{{deploy.parameters.message-hub-rest-url}}"
+       MESSAGE_HUB_KAFKA_ADMIN_URL: "{{deploy.parameters.message-hub-admin-url}}"
+       MESSAGE_HUB_KAFKA_INSTANCE_NAME: "{{deploy.parameters.message-hub-instance-name}}"
+       MESSAGE_HUB_SRC_TOPIC: "{{deploy.parameters.message-hub-src-topic}}"
+       MESSAGE_HUB_DEST_TOPIC: "{{deploy.parameters.message-hub-out-topic}}"
+      execute: false
+
+deploy:
+  schema: deploy.json
+  service-category: pipeline
+  parameters:
+    deploy-region: "{{region}}"
+    deploy-org: "{{organization}}"
+    deploy-space: "{{space}}"
+    openwhisk-api-endpoint: "openwhisk.ng.bluemix.net"
+    openwhisk-auth-key: ""
+    message-hub-api-key: ""
+    message-hub-user: ""
+    message-hub-password: ""
+    message-hub-rest-url: "https://kafka-rest-prod01.messagehub.services.us-south.bluemix.net:443"
+    message-hub-admin-url: "https://kafka-admin-prod01.messagehub.services.us-south.bluemix.net:443"
+    message-hub-instance-name: "kafka-broker"
+    message-hub-src-topic: "in-topic"
+    message-hub-out-topic: "out-topic"

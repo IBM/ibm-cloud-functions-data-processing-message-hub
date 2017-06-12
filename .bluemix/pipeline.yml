@@ -1,0 +1,108 @@
+---
+stages:
+- name: Deploy
+  inputs:
+  - service: ${REPO}
+    type: git
+    branch: master
+    dir_name: null
+  triggers:
+  - type: commit
+  properties:
+  - name: OPENWHISK_API_ENDPOINT
+    value: ${OPENWHISK_API_ENDPOINT}
+    type: text
+  - name: OPENWHISK_AUTH_KEY
+    value: ${OPENWHISK_AUTH_KEY}
+    type: secure
+  - name: MESSAGE_HUB_API_KEY
+    value: ${MESSAGE_HUB_API_KEY}
+    type: text
+  - name: MESSAGE_HUB_USER
+    value: ${MESSAGE_HUB_USER}
+    type: text
+  - name: MESSAGE_HUB_PASSWORD
+    value: ${MESSAGE_HUB_PASSWORD}
+    type: text
+  - name: MESSAGE_HUB_KAFKA_REST_URL
+    value: ${MESSAGE_HUB_KAFKA_REST_URL}
+    type: secure
+  - name: MESSAGE_HUB_KAFKA_ADMIN_URL
+    value: ${MESSAGE_HUB_KAFKA_ADMIN_URL}
+    type: text
+  - name: MESSAGE_HUB_KAFKA_INSTANCE_NAME
+    value: ${MESSAGE_HUB_KAFKA_INSTANCE_NAME}
+    type: text
+  - name: MESSAGE_HUB_SRC_TOPIC
+    value: ${MESSAGE_HUB_SRC_TOPIC}
+    type: text
+  - name: MESSAGE_HUB_DEST_TOPIC
+    value: ${MESSAGE_HUB_DEST_TOPIC}
+    type: secure
+  jobs:
+  - name: Deploy
+    type: deployer
+    target:
+      region_id: ${REGION}
+      organization: ${ORG}
+      space: ${SPACE}
+      application: messagehubdataprocessing
+    script: |+
+      #!/bin/bash
+
+      set -x
+      # download openwhisk cli
+      if [ ! -f ./wsk ]; then
+          wget https://openwhisk.ng.bluemix.net/cli/go/download/linux/amd64/wsk
+          chmod u+x wsk
+      fi
+
+      # set up openwhisk cli
+      ./wsk property set --apihost ${OPENWHISK_API_ENDPOINT} --auth ${OPENWHISK_AUTH_KEY}
+
+      # create openwhisk package
+      ./wsk package refresh
+
+      set +e
+
+      echo "Creating a clean deployment"
+      ./wsk rule delete --disable kafka-inbound-rule
+      ./wsk trigger delete kafka-trigger
+      ./wsk action delete kafka-sequence
+      ./wsk action delete mhget-action
+      ./wsk action delete mhpost-action
+      sleep 1
+
+      echo "Creating the kafka-trigger trigger"
+      ./wsk trigger create kafka-trigger \
+        --feed /_/Bluemix_${KAFKA_INSTANCE_NAME}_Credentials-1/messageHubFeed \
+        --param isJSONData true \
+        --param topic ${SRC_TOPIC}
+
+      echo "Creating mhget-action action as a regular Node.js action"
+      ./wsk action create mhget-action actions/mhget/mhget.js
+
+      echo "Creating mhpost-action action as a zipped Node.js action, as it contains dependencies"
+      DIR=`pwd`
+      cd actions/mhpost
+      npm install --loglevel=error
+      zip -r mhpost.zip *
+      cd ${DIR}
+      ./wsk action create mhpost-action actions/mhpost/mhpost.zip --kind nodejs:6 \
+        --param api_key ${API_KEY} \
+        --param kafka_rest_url ${KAFKA_REST_URL} \
+        --param topic ${DEST_TOPIC}
+
+      echo "Creating the kafka-sequence sequence that links the get and post actions"
+      ./wsk action create kafka-sequence --sequence mhget-action,mhpost-action
+
+      echo "Creating the kafka-inbound-rule rule that links the trigger to the sequence"
+      ./wsk rule create kafka-inbound-rule kafka-trigger kafka-sequence
+
+      echo "Test that everything is working ... TODO"
+
+hooks:
+- enabled: true
+  label: null
+  ssl_enabled: false
+  url: https://devops-api.ng.bluemix.net/v1/messaging/webhook/publish

@@ -58,7 +58,7 @@ function install() {
 function uninstall() {
   echo -e "Uninstalling..."
 
-    wsk rule delete --disable kafka-inbound-rule
+  wsk rule delete --disable kafka-inbound-rule
 	wsk trigger delete kafka-trigger
 	wsk action delete kafka-sequence
 	wsk action delete mhget-action

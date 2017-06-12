@@ -34,7 +34,7 @@ As an alternative to this end-to-end example, you might also consider the more [
 # 1. Provision Message Hub
 Log into Bluemix, provision a [Message Hub](https://console.ng.bluemix.net/catalog/services/message-hub) instance, and name it `kafka-broker`. On the "Manage" tab of your Message Hub console create two topics: _in-topic_ and _out-topic_.
 
-Copy `template.local.env` to a new file named `local.env` and update the `KAFKA_INSTANCE_NAME`, `SRC_TOPIC`, and `DEST_TOPIC` values for your instance if they differ. Update the `API_KEY`, `USER`, and `PASSWORD` values from the "Credentials" tab.
+Copy `template.local.env` to a new file named `local.env` and update the `KAFKA_INSTANCE_NAME`, `SRC_TOPIC`, and `DEST_TOPIC` values for your instance if they differ. Update the `API_KEY`, `USER`, and `PASSWORD` values from the "Service credentials" tab.
 
 # 2. Create OpenWhisk actions, triggers, and rules
 `deploy.sh` is a convenience script reads the environment variables from `local.env` and creates the OpenWhisk actions, triggers, and rules on your behalf. Later you will run these commands yourself.
@@ -42,9 +42,7 @@ Copy `template.local.env` to a new file named `local.env` and update the `KAFKA_
 ```bash
 ./deploy.sh --install
 ```
-> **Note**: If you see any error messages, refer to the [Troubleshooting](#troubleshooting) section below.
-
-> **Note**: `deploy.sh` will be replaced with [`wskdeploy`](https://github.com/openwhisk/openwhisk-wskdeploy) in the future. `wskdeploy` uses a manifest to deploy declared triggers, actions, and rules to OpenWhisk.
+> **Note**: If you see any error messages, refer to the [Troubleshooting](#troubleshooting) section below. You can also explore [Alternative deployment methods](#alternative-deployment-methods).
 
 # 3. Test new message events
 Open one terminal window to poll the logs:
@@ -132,6 +130,13 @@ If the error is not immediately obvious, make sure you have the [latest version 
 ```bash
 wsk property get --cliversion
 ```
+
+# Alternative deployment methods
+`deploy.sh` will be replaced with [`wskdeploy`](https://github.com/openwhisk/openwhisk-wskdeploy) in the future. `wskdeploy` uses a manifest to deploy declared triggers, actions, and rules to OpenWhisk.
+
+You can also use the following button to clone a copy of this repository and deploy to Bluemix as part of a DevOps toolchain. Supply your OpenWhisk and Cloudant credentials under the Delivery Pipeline icon, click Create, then run the Deploy stage for the Delivery Pipeline.
+
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/openwhisk-data-processing-message-hub.git)
 
 # License
 [Apache 2.0](LICENSE.txt)
