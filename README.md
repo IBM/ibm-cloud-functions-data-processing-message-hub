@@ -134,7 +134,7 @@ wsk property get --cliversion
 # Alternative deployment methods
 `deploy.sh` will be replaced with [`wskdeploy`](https://github.com/openwhisk/openwhisk-wskdeploy) in the future. `wskdeploy` uses a manifest to deploy declared triggers, actions, and rules to OpenWhisk.
 
-You can also use the following button to clone a copy of this repository and deploy to Bluemix as part of a DevOps toolchain. Supply your OpenWhisk and Cloudant credentials under the Delivery Pipeline icon, click Create, then run the Deploy stage for the Delivery Pipeline.
+You can also use the following button to clone a copy of this repository and deploy to Bluemix as part of a DevOps toolchain. Supply your OpenWhisk and Message Hub credentials under the Delivery Pipeline icon, click Create, then run the Deploy stage for the Delivery Pipeline.
 
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/openwhisk-data-processing-message-hub.git)
 
