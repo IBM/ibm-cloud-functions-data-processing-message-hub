@@ -83,14 +83,14 @@ wsk trigger create message-trigger \
 ```
 
 ## 5.2 Create action to consume message
-Upload the `receive-consume` action as a single file Node.js action. This downloads messages when they arrive via the trigger.
+Upload the `receive-consume` action as a JavaScript action. This downloads messages when they arrive via the trigger.
 
 ```bash
 wsk action create receive-consume actions/receive-consume.js
 ```
 
 ## 5.3 Create action to aggregate and send back message
-Upload the `transform-produce` action. This aggregates information from the action above, and sends a summary JSON string back to Kafka.
+Upload the `transform-produce` action. This aggregates information from the action above, and sends a summary JSON string back to another Message Hub topic.
 
 ```bash
 wsk action create transform-produce actions/transform-produce.js \
