@@ -41,8 +41,8 @@ post()
 #############################################################################
 # MAIN
 #############################################################################
-echo "Encoding payload from file 'request.json'..."
-PAYLOAD=$( base64 request.json | tr -d '\n' | tr -d '\r' )   # Note that it is important to disable line wrapping
+echo "Encoding payload from file 'events.json'..."
+PAYLOAD=$( base64 events.json | tr -d '\n' | tr -d '\r' )   # Note that it is important to disable line wrapping
 
 NUM_MSGS=2
 for ((i=0; i<$NUM_MSGS; i++)); do

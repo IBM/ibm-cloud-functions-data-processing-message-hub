@@ -25,31 +25,28 @@ function usage() {
 function install() {
   echo -e "Installing OpenWhisk actions, triggers, and rules for openwhisk-data-processing-message-hub..."
 
-  echo "Creating the kafka-trigger trigger"
-  wsk trigger create kafka-trigger \
-    --feed /_/Bluemix_${KAFKA_INSTANCE_NAME}_Credentials-1/messageHubFeed \
+  echo -e "Make Message Hub connection info available to OpenWhisk"
+  wsk package refresh
+
+  echo "Creating the message-trigger trigger"
+  wsk trigger create message-trigger \
+    --feed Bluemix_${KAFKA_INSTANCE}_Credentials-1/messageHubFeed \
     --param isJSONData true \
     --param topic ${SRC_TOPIC}
 
-  echo "Creating mhget-action action as a regular Node.js action"
-  wsk action create mhget-action actions/mhget/mhget.js
+  echo "Creating receive-consume action as a regular Node.js action"
+  wsk action create receive-consume actions/receive-consume.js
 
-  echo "Creating mhpost-action action as a zipped Node.js action, as it contains dependencies"
-  DIR=`pwd`
-  cd actions/mhpost
-  npm install --loglevel=error
-  zip -r mhpost.zip *
-  cd ${DIR}
-  wsk action create mhpost-action actions/mhpost/mhpost.zip --kind nodejs:6 \
-    --param api_key ${API_KEY} \
-    --param kafka_rest_url ${KAFKA_REST_URL} \
-    --param topic ${DEST_TOPIC}
+  echo "Creating transform-produce action as regular Node.js action"
+  wsk action create transform-produce actions/transform-produce.js \
+    --param topic ${DEST_TOPIC} \
+    --param kafka ${KAFKA_INSTANCE}
 
-  echo "Creating the kafka-sequence sequence that links the get and post actions"
-  wsk action create kafka-sequence --sequence mhget-action,mhpost-action
+  echo "Creating the message-processing-sequence sequence that links the consumer and producer actions"
+  wsk action create message-processing-sequence --sequence receive-consume,transform-produce
 
-  echo "Creating the kafka-inbound-rule rule that links the trigger to the sequence"
-  wsk rule create kafka-inbound-rule kafka-trigger kafka-sequence
+  echo "Creating the  message-rule rule that links the trigger to the sequence"
+  wsk rule create message-rule message-trigger message-processing-sequence
 
   echo -e "Install Complete"
 }
@@ -58,22 +55,18 @@ function install() {
 function uninstall() {
   echo -e "Uninstalling..."
 
-  wsk rule delete --disable kafka-inbound-rule
-	wsk trigger delete kafka-trigger
-	wsk action delete kafka-sequence
-	wsk action delete mhget-action
-	wsk action delete mhpost-action
+  wsk rule delete --disable message-rule
+	wsk trigger delete message-trigger
+	wsk action delete message-processing-sequence
+	wsk action delete receive-consume
+	wsk action delete transform-produce
+  wsk package delete Bluemix_${KAFKA_INSTANCE}_Credentials-1
 
   echo -e "Uninstall Complete"
 }
 
 function showenv() {
-  echo -e API_KEY="$API_KEY"
-  echo -e USER="$USER"
-  echo -e PASSWORD="$PASSWORD"
-  echo -e KAFKA_REST_URL="$KAFKA_REST_URL"
-  echo -e KAFKA_ADMIN_URL="$KAFKA_ADMIN_URL"
-  echo -e KAFKA_INSTANCE_NAME="$KAFKA_INSTANCE_NAME"
+  echo -e KAFKA_INSTANCE="$KAFKA_INSTANCE"
   echo -e SRC_TOPIC="$SRC_TOPIC"
   echo -e DEST_TOPIC="$DEST_TOPIC"
 }
