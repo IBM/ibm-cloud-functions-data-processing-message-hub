@@ -35,7 +35,7 @@ pipeline-message-hub-data-processing:
        MESSAGE_HUB_PASSWORD: "{{deploy.parameters.message-hub-password}}"
        MESSAGE_HUB_KAFKA_REST_URL: "{{deploy.parameters.message-hub-rest-url}}"
        MESSAGE_HUB_KAFKA_ADMIN_URL: "{{deploy.parameters.message-hub-admin-url}}"
-       MESSAGE_HUB_KAFKA_INSTANCE_NAME: "{{deploy.parameters.message-hub-instance-name}}"
+       MESSAGE_HUB_KAFKA_INSTANCE: "{{deploy.parameters.message-hub-instance-name}}"
        MESSAGE_HUB_SRC_TOPIC: "{{deploy.parameters.message-hub-src-topic}}"
        MESSAGE_HUB_DEST_TOPIC: "{{deploy.parameters.message-hub-out-topic}}"
       execute: false

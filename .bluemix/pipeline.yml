@@ -30,8 +30,8 @@ stages:
   - name: MESSAGE_HUB_KAFKA_ADMIN_URL
     value: ${MESSAGE_HUB_KAFKA_ADMIN_URL}
     type: text
-  - name: MESSAGE_HUB_KAFKA_INSTANCE_NAME
-    value: ${MESSAGE_HUB_KAFKA_INSTANCE_NAME}
+  - name: MESSAGE_HUB_KAFKA_INSTANCE
+    value: ${MESSAGE_HUB_KAFKA_INSTANCE}
     type: text
   - name: MESSAGE_HUB_SRC_TOPIC
     value: ${MESSAGE_HUB_SRC_TOPIC}
@@ -77,7 +77,7 @@ stages:
 
       echo "Creating the kafka-trigger trigger"
       ./wsk trigger create kafka-trigger \
-        --feed /_/Bluemix_${MESSAGE_HUB_KAFKA_INSTANCE_NAME}_Credentials-1/messageHubFeed \
+        --feed /_/Bluemix_${MESSAGE_HUB_KAFKA_INSTANCE}_Credentials-1/messageHubFeed \
         --param isJSONData true \
         --param topic ${MESSAGE_HUB_SRC_TOPIC}
 
