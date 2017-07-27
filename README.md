@@ -90,7 +90,7 @@ wsk action create receive-consume actions/receive-consume.js
 ```
 
 ## 5.3 Create action to aggregate and send back message
-Upload the `transform-produce` action as a zipped action, in order to include dependencies that are not in the default Node.js environment on OpenWhisk. This aggregates information from the action above, and sends a summary JSON string back to Kafka.
+Upload the `transform-produce` action. This aggregates information from the action above, and sends a summary JSON string back to Kafka.
 
 ```bash
 wsk action create transform-produce actions/transform-produce.js \
