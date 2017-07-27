@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub.svg?branch=master)](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub)
 
 # Message Hub data processing with OpenWhisk
-This project shows the power of serverless, event-driven architectures to execute code in response to messages or to handle streams of data records.
+This project shows how serverless, event-driven architectures can be used to execute code in response to messages or to handle streams of data records.
 
 It demonstrates two OpenWhisk actions (written in JavaScript) that read and write messages with Message Hub (based on Apache Kafka). The use case demonstrates how actions can work with data services and execute logic in response to message events.
 
