@@ -4,7 +4,7 @@
 
 *다른 언어로 보기: [English](README.md).*
 
-이 과정은 서버리스, 이벤트 중심 아키텍쳐라 메시지나 데이터 레코드에 대한 스트림을 처리하는데 대응하여 어떻게 코드를 실행하는지 보여줍니다.
+이 과정에서는 서버리스, 이벤트 중심 아키텍쳐가 어떻게 메시지에 대한 응답으로 코드를 실행하거나 데이터 레코드에 대한 스트림을 처리하는지 보여줍니다.
 
 여기서는 Apache Kafka 기반의 IBM Message Hub에 메시지를 쓰고 읽는 JavaScript로 작성된 두 개의 OpenWhisk 액션을 보여줍니다. 사용 사례는 액션이 데이터 서비스와 함께 동작하는지, 메시지 이벤트에 대응하여 로직을 실행하는지 보여줍니다.
 
@@ -19,11 +19,12 @@
 
 ## 전제 조건
 
-You should have a basic understanding of the OpenWhisk programming model. If not, [try the action, trigger, and rule demo first](https://github.com/IBM/openwhisk-action-trigger-rule).
+기본적인 OpenWhisk 프로그래밍 모델에 대한 이해가 필요합니다. 만약 그렇지 않다면, [액션, 트리거 그리고 
+룰에 대한 데모를 먼저 확인 하십시오](https://github.com/IBM/openwhisk-action-trigger-rule).
 
-Also, you'll need a Bluemix account and the latest [OpenWhisk command line tool (`wsk`) installed and on your PATH](https://github.com/IBM/openwhisk-action-trigger-rule/blob/master/docs/OPENWHISK.md).
+또한, Bluemix 계정과 최신 버젼의 [OpenWhisk 명령행 도구(`wsk`)를 설치 후  실행 경로(PATH)에 추가해야 합니다](https://github.com/IBM/openwhisk-action-trigger-rule/blob/master/docs/OPENWHISK-ko.md).
 
-As an alternative to this end-to-end example, you might also consider the more [basic "building block" version](https://github.com/IBM/openwhisk-message-hub-trigger) of this sample.
+이 엔드-투-엔드 예제에 대한 대안으로서, 이 샘플의 [기본적인 "빌딩 블럭" 버젼](https://github.com/IBM/openwhisk-rest-api-trigger)도 고려해 볼 수 있습니다.
 
 ## 단계
 
