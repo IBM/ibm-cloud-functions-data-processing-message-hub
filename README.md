@@ -14,7 +14,7 @@ One action receives message streams of one or more data records, and these are i
 
 ## Included components
 
-- IB Cloud Functions powered by Apache OpenWhisk
+- IBM Cloud Functions powered by Apache OpenWhisk
 - IBM Message Hub (Apache Kafka)
 
 ## Prerequisites
