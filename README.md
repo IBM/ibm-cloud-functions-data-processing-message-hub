@@ -4,22 +4,22 @@
 
 *Read this in other languages: [한국어](README-ko.md).*
 
-This project shows how serverless, event-driven architectures can be used to execute code in response to messages or to handle streams of data records.
+This project shows how serverless, event-driven architectures execute code in response to messages or to handle streams of data records.
 
-It demonstrates two IBM Cloud Functions (powered by Apache OpenWhisk) actions (written in JavaScript) that read and write messages with Message Hub (based on Apache Kafka). The use case demonstrates how actions can work with data services and execute logic in response to message events.
+The application demonstrates two IBM Cloud Functions (based on Apache OpenWhisk) that read and write messages with IBM Message Hub (based on Apache Kafka). The use case demonstrates how actions work with data services and execute logic in response to message events.
 
-One action receives message streams of one or more data records, and these are in turn piped to another action in an OpenWhisk sequence (a way to link actions declaratively in a chain). The second action aggregates the message and posts a transformed message to another topic.
+One function, or action, is triggered by message streams of one or more data records. These records are piped to another action in a sequence (a way to link actions declaratively in a chain). The second action aggregates the message and posts a transformed summary message to another topic.
 
 ![Sample Architecture](docs/OpenWhisk-MessageHub-sample-architecture.png)
 
 ## Included components
 
-- IBM Cloud Functions powered by Apache OpenWhisk
-- IBM Message Hub (Apache Kafka)
+- IBM Cloud Functions (powered by Apache OpenWhisk)
+- IBM Message Hub (powered by Apache Kafka)
 
 ## Prerequisites
 
-You should have a basic understanding of the OpenWhisk programming model. If not, [try the action, trigger, and rule demo first](https://github.com/IBM/openwhisk-action-trigger-rule).
+You should have a basic understanding of the Cloud Functions/OpenWhisk programming model. If not, [try the action, trigger, and rule demo first](https://github.com/IBM/openwhisk-action-trigger-rule).
 
 Also, you'll need an IBM Cloud account and the latest [OpenWhisk command line tool (`wsk`) installed and on your PATH](https://github.com/IBM/openwhisk-action-trigger-rule/blob/master/docs/OPENWHISK.md).
 
