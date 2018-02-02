@@ -142,7 +142,7 @@ wsk property get --cliversion
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/openwhisk-data-processing-message-hub.git)
 
 # 라이센스
-[Apache 2.0](LICENSE.txt)
+[Apache 2.0](LICENSE)
 
 # 크레딧
 이 과정은 [이 글](https://medium.com/openwhisk/transit-flexible-pipeline-for-iot-data-with-bluemix-and-openwhisk-4824cf20f1e0#.talwj9dno)의 코드에서 많은 영감을 받았고 이를 재사용했습니다.
