@@ -141,7 +141,7 @@ You can also use the following button to clone a copy of this repository and dep
 [![Deploy to the IBM Cloud](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/openwhisk-data-processing-message-hub.git)
 
 # License
-[Apache 2.0](LICENSE.txt)
+[Apache 2.0](LICENSE)
 
 # Credits
 This project was inspired by and reuses significant amount of code from [this article](https://medium.com/openwhisk/transit-flexible-pipeline-for-iot-data-with-bluemix-and-openwhisk-4824cf20f1e0#.talwj9dno).
