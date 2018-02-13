@@ -1,0 +1,48 @@
+# Manifest for ibm-cloud-functions-data-processing-message-hub
+# Repo is located at https://github.com/IBM/ibm-cloud-functions-data-processing-message-hub
+# Installing openwhisk actions, triggers, and rules for Message Hub sample app
+
+# Deployment using this manifest file creates following OpenWhisk components:
+#   Package:    data-processing-message-hub
+#   Action:     data-processing-message-hub/receive-consume
+#   Action:     data-processing-message-hub/transform-produce
+#   Sequence:   data-processing/message-processing-sequence
+#   Trigger:    message-trigger
+#   Rule:       message-rule
+
+# This manifest file expects following env. variables:
+#   KAFKA_INSTANCE
+#   SRC_TOPIC
+#   DEST_TOPIC
+packages:
+    data-processing-message-hub:
+        actions:
+            # Action named "receive-consume"
+            # Creating action as a regular Node.js action
+            receive-consume:
+                function: actions/receive-consume.js
+            # Action named "transform-produce"
+            transform-produce:
+                function: actions/transform-produce.js
+                inputs:
+                    topic: $DEST_TOPIC
+                    kafka: $KAFKA_INSTANCE
+        sequences:
+            # Sequence named "message-processing-sequence"
+            # Creating the sequence that links the get and post actions
+            message-processing-sequence:
+                actions: receive-consume, transform-produce
+        triggers:
+            # Creating the message-trigger trigger"
+            message-trigger:
+                feed: Bluemix_$KAFKA_INSTANCE_Credentials-1/messageHubFeed
+                inputs:
+                    isJSONData: true
+                    topic: $SRC_TOPIC
+        rules:
+            # Rule named "message-rule"
+            # Creating the rule that links the trigger to the sequence
+            kafka-inbound-rule:
+                trigger: message-trigger
+                action: message-processing-sequence
+
