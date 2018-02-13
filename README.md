@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub.svg?branch=master)](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub)
+[![Build Status](https://travis-ci.org/IBM/ibm-cloud-functions-data-processing-message-hub.svg?branch=master)](https://travis-ci.org/IBM/ibm-cloud-functions-data-processing-message-hub)
 
 # Message Hub data processing with IBM Cloud Functions powered by Apache OpenWhisk
 
