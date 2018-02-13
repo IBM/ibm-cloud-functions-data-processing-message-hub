@@ -35,7 +35,7 @@ packages:
         triggers:
             # Creating the message-trigger trigger"
             message-trigger:
-                feed: Bluemix_$KAFKA_INSTANCE_Credentials-1/messageHubFeed
+                feed: Bluemix_${KAFKA_INSTANCE}_Credentials-1/messageHubFeed
                 inputs:
                     isJSONData: true
                     topic: $SRC_TOPIC

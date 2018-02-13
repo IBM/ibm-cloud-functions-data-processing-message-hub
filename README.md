@@ -134,7 +134,28 @@ wsk property get --cliversion
 ```
 
 # Alternative deployment methods
-`deploy.sh` will be replaced with [`wskdeploy`](https://github.com/openwhisk/openwhisk-wskdeploy) in the future. `wskdeploy` uses a manifest to deploy declared triggers, actions, and rules to OpenWhisk.
+
+## Whisk Deploy
+Download latest `wskdeploy` from the [release page](https://github.com/apache/incubator-openwhisk-wskdeploy/releases) of [openwhisk-wskdeploy](https://github.com/apache/incubator-openwhisk-wskdeploy) project.
+
+### Pre-requisites:
+* [Configure IBM Message Hub](#1-configure-ibm-message-hub)
+
+
+### Deployment
+```
+git clone https://github.com/IBM/ibm-cloud-functions-data-processing-message-hub.git
+cd ibm-cloud-functions-data-processing-message-hub
+wsk package refresh
+wskdeploy
+```
+
+### Undeploy:
+```
+wskdeploy undeploy
+```
+
+## One Click Deployment
 
 You can also use the following button to clone a copy of this repository and deploy to the IBM Cloud as part of a DevOps toolchain. Supply your OpenWhisk and Message Hub credentials under the Delivery Pipeline icon, click Create, then run the Deploy stage for the Delivery Pipeline.
 
