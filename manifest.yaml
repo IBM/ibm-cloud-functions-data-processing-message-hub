@@ -6,7 +6,7 @@
 #   Package:    data-processing-message-hub
 #   Action:     data-processing-message-hub/receive-consume
 #   Action:     data-processing-message-hub/transform-produce
-#   Sequence:   data-processing/message-processing-sequence
+#   Sequence:   data-processing-message-hub/message-processing-sequence
 #   Trigger:    message-trigger
 #   Rule:       message-rule
 
