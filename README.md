@@ -35,7 +35,7 @@ As an alternative to this end-to-end example, you might also consider the more [
 
 
 # 1. Configure IBM Message Hub
-Log into the IBM Cloud, provision a [Message Hub](https://console.ng.bluemix.net/catalog/services/message-hub) instance, and name it `kafka-broker`. On the "Manage" tab of your Message Hub console create two topics: _in-topic_ and _out-topic_. On the "Service credentials" tab make sure to add a new credential named _Credentials-1_.
+Log into the IBM Cloud, provision a [Message Hub](https://console.ng.bluemix.net/catalog/services/message-hub) instance, and name it `kafka-broker`. On the `Manage` tab of your Message Hub console create two topics: _in-topic_ and _out-topic_. On the `Service credentials` tab make sure to add a new credential named _Credentials-1_.
 
 Copy `template.local.env` to a new file named `local.env` and update the `KAFKA_INSTANCE`, `SRC_TOPIC`, and `DEST_TOPIC` values for your instance if they differ.
 
@@ -157,7 +157,7 @@ wskdeploy undeploy
 
 ## One Click Deployment
 
-You can also use the following button to clone a copy of this repository and deploy to the IBM Cloud as part of a DevOps toolchain. Supply your OpenWhisk and Message Hub credentials under the Delivery Pipeline icon, click Create, then run the Deploy stage for the Delivery Pipeline.
+You can also use the following button to clone a copy of this repository and deploy to the IBM Cloud as part of a DevOps toolchain. Supply your OpenWhisk and Message Hub credentials under the Delivery Pipeline icon, click `Create`, then run the Deploy stage for the Delivery Pipeline.
 
 [![Deploy to the IBM Cloud](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/openwhisk-data-processing-message-hub.git)
 
